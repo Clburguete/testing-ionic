@@ -15,28 +15,63 @@ import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, Came
 export class CameraPrevPage {
 
   picture: string = null;
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private camerapreview: CameraPreview) {
-    this.showAlert("LLEGA A LA PAGINA")
+  pictureOpts: CameraPreviewPictureOptions = {
+    width: window.screen.width,
+    height: window.screen.height,
+    quality: 75,
+  };
+  image: string = null;
 
+  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private camerapreview: CameraPreview) {
+    const cameraPreviewOpts: CameraPreviewOptions = {
+      x: 0,
+      y: 0,
+      width: window.screen.width,
+      height: window.screen.height,
+      camera: 'rear',
+      tapPhoto: true,
+      previewDrag: true,
+      toBack: true,
+      alpha: 1
+    };
+
+
+    this.camerapreview.startCamera(cameraPreviewOpts).then(
+      (res) => {
+        //this.showAlert(res)
+      },
+      (err) => {
+        //this.showAlert(err)
+      });
 
   }
 
   ionViewDidLoad() {
-    this.showAlert("LLEGA A LA PAGINA")
+
   }
+
   showAlert(test) {
-     let alert = this.alertCtrl.create({
-       title: test,
-       buttons: ['OK']
-     })
-     alert.present();
-   }
-  // takePicture(){
-  //   this.camerapreview.takePicture(this.pictureOpts).then((imageData) => {
-  //     this.picture = 'data:image/jpeg;base64,' + imageData;
-  //   }, (err) => {
-  //     console.log(err);
-  //   });
-  // }
+    let alert = this.alertCtrl.create({
+      title: test,
+      buttons: ['OK']
+    })
+    alert.present();
+  }
+
+  takePicture() {
+    this.camerapreview.takePicture(this.pictureOpts).then((imageData) => {
+      this.picture = 'data:image/jpeg;base64,' + imageData;
+      let storageRef = firebase.storage().ref();
+      const filename = Math.floor(Date.now() / 1000);
+      const imageRef = storageRef.child(`images/${filename}.jpg`);
+      imageRef.putString(this.picture, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
+        this.showAlert("IMAGE UPLOADED");
+        //this.navCtrl.push(HomePage)
+      });
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
 
 }

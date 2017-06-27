@@ -4,18 +4,20 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Camera } from '@ionic-native/camera';
-import { CameraPreview } from '@ionic-native/camera-preview'
+import { CameraPreview } from '@ionic-native/camera-preview';
 
 
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+import { CameraPrevPage } from '../pages/camera-prev/camera-prev';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    CameraPrevPage
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,9 @@ import { CameraPreview } from '@ionic-native/camera-preview'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    CameraPrevPage
+
   ],
   providers: [
     Camera,
