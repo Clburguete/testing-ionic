@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Camera } from '@ionic-native/camera';
+import { CameraPreview } from '@ionic-native/camera-preview'
 
 
 
@@ -27,6 +28,7 @@ import { Camera } from '@ionic-native/camera';
   ],
   providers: [
     Camera,
+    CameraPreview,
     LocalNotifications,
     StatusBar,
     SplashScreen,
