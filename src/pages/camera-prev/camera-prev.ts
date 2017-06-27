@@ -13,11 +13,7 @@ import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, Came
   templateUrl: 'camera-prev.html',
 })
 export class CameraPrevPage {
-  pictureOpts: CameraPreviewPictureOptions = {
-    width: window.screen.width,
-    height: window.screen.height,
-    quality: 85,
-};
+
   picture: string = null;
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private camerapreview: CameraPreview) {
     this.showAlert("LLEGA A LA PAGINA")
@@ -35,12 +31,12 @@ export class CameraPrevPage {
      })
      alert.present();
    }
-  takePicture(){
-    this.camerapreview.takePicture(this.pictureOpts).then((imageData) => {
-      this.picture = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      console.log(err);
-    });
-  }
+  // takePicture(){
+  //   this.camerapreview.takePicture(this.pictureOpts).then((imageData) => {
+  //     this.picture = 'data:image/jpeg;base64,' + imageData;
+  //   }, (err) => {
+  //     console.log(err);
+  //   });
+  // }
 
 }
