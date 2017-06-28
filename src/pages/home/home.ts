@@ -3,6 +3,7 @@ import { NavController, Platform, AlertController, LoadingController } from 'ion
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Camera } from '@ionic-native/camera';
 import * as firebase from 'firebase'
+import { ShareProvider } from '../../providers/share/share';
 
 
 
@@ -15,11 +16,13 @@ export class HomePage {
 
   pictureTaken: boolean = false;
   image: string = null;
+  likes: number = 0;
 
 
-  constructor(private loadingCtrl: LoadingController, private camera: Camera, public navCtrl: NavController, public platform: Platform, public alertCtrl: AlertController, public localnotifications: LocalNotifications) {
+  constructor(private shareService: ShareProvider,private loadingCtrl: LoadingController, private camera: Camera, public navCtrl: NavController, public platform: Platform, public alertCtrl: AlertController, public localnotifications: LocalNotifications) {
 
     platform.ready().then(() => {
+      this.image = this.shareService.getImage()
       this.localnotifications.hasPermission().then(function(granted) {
         if (!granted) {
           this.localnotifications.registerPermission();

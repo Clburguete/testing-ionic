@@ -7,10 +7,18 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
+  <ion-card>
+  <img src="{{image}}"/>
+  <ion-card-content>
+    <ion-card-title>
+      Nine Inch Nails Live
+      </ion-card-title>
+    <p>
+      The most popular industrial group ever, and largely
+      responsible for bringing the music to a mass audience.
+    </p>
+  </ion-card-content>
+</ion-card>
 
-  <button (click)="addNotifications()" ion-button block color="primary">Schedule</button>
-  <button (click)="getPicture()" ion-button block color="primary">Take Photo</button>
-  <button *ngIf='image' (click)="upload()" ion-button block color="primary">Upload</button>
 
 </ion-content>

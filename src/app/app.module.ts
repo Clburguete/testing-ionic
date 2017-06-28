@@ -12,6 +12,7 @@ import { CameraPreview } from '@ionic-native/camera-preview';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CameraPrevPage } from '../pages/camera-prev/camera-prev';
+import { ShareProvider } from '../providers/share/share';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CameraPrevPage } from '../pages/camera-prev/camera-prev';
     LocalNotifications,
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ShareProvider
   ]
 })
 export class AppModule {}

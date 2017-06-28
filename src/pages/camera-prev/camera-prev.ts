@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview'
+import { ShareProvider } from '../../providers/share/share';
+import { HomePage } from '../home/home';
+import * as firebase from 'firebase';
 
-/**
- * Generated class for the CameraPrevPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
+
+
 @Component({
   selector: 'page-camera-prev',
   templateUrl: 'camera-prev.html',
@@ -22,7 +22,7 @@ export class CameraPrevPage {
   };
   image: string = null;
 
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private camerapreview: CameraPreview) {
+  constructor(private shareService: ShareProvider, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private camerapreview: CameraPreview) {
     const cameraPreviewOpts: CameraPreviewOptions = {
       x: 0,
       y: 0,
@@ -46,10 +46,6 @@ export class CameraPrevPage {
 
   }
 
-  ionViewDidLoad() {
-
-  }
-
   showAlert(test) {
     let alert = this.alertCtrl.create({
       title: test,
@@ -61,12 +57,14 @@ export class CameraPrevPage {
   takePicture() {
     this.camerapreview.takePicture(this.pictureOpts).then((imageData) => {
       this.picture = 'data:image/jpeg;base64,' + imageData;
+      this.shareService.setImage(this.picture)
       let storageRef = firebase.storage().ref();
       const filename = Math.floor(Date.now() / 1000);
       const imageRef = storageRef.child(`images/${filename}.jpg`);
       imageRef.putString(this.picture, firebase.storage.StringFormat.DATA_URL).then((snapshot) => {
+        this.camerapreview.stopCamera();
         this.showAlert("IMAGE UPLOADED");
-        //this.navCtrl.push(HomePage)
+        this.navCtrl.push(HomePage)
       });
     }, (err) => {
       console.log(err);
